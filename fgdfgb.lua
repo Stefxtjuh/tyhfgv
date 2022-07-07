@@ -167,7 +167,7 @@ Content.BackgroundTransparency = 1.000
 Content.BorderSizePixel = 0
 Content.Size = UDim2.new(1, 0, 1, 0)
 Content.Font = Enum.Font.Gotham
-Content.Text = "Message Here. This is an example message prompt."
+Content.Text = "Message Here. This is an example message ."
 Content.TextColor3 = Color3.fromRGB(230, 230, 230)
 Content.TextSize = 14.000
 Content.TextWrapped = true
@@ -201,33 +201,33 @@ local T = game:GetService('TweenService')
 local t = TweenInfo.new(0.5, Enum.EasingStyle.Quint)
 local tp = NotificationParent
 
-function prompt(title, text, closeTime, close)
-	local Prompt = Notification:Clone()
+function notifications(title, text, closeTime, close)
+	local notifications = Notification:Clone()
 	local Sound = Instance.new('Sound', Notification)
 
-	Prompt.Visible = true
-	Prompt.Container.Top.Title.Text = title
-	Prompt.Container.Body.Content.Text = text
+	notifications.Visible = true
+	notifications.Container.Top.Title.Text = title
+	notifications.Container.Body.Content.Text = text
 
-	Prompt.Parent = NotificationParent
+	notifications.Parent = NotificationParent
 	Sound.SoundId = ""
 	Sound:Play()
 
-	T:Create(Prompt.Container, t, {Position = UDim2.new(0, 0, 0, 0)}):Play()
+	T:Create(notifications.Container, t, {Position = UDim2.new(0, 0, 0, 0)}):Play()
 
 	-- auto size
-	Prompt.AutomaticSize = Enum.AutomaticSize.Y
-	Prompt.Container.AutomaticSize = Enum.AutomaticSize.Y
-	Prompt.Container.Body.AutomaticSize = Enum.AutomaticSize.Y
-	Prompt.Container.Body.Content.AutomaticSize = Enum.AutomaticSize.Y
+	notifications.AutomaticSize = Enum.AutomaticSize.Y
+	notifications.Container.AutomaticSize = Enum.AutomaticSize.Y
+	notifications.Container.Body.AutomaticSize = Enum.AutomaticSize.Y
+	notifications.Container.Body.Content.AutomaticSize = Enum.AutomaticSize.Y
 
-	Prompt.Container.Top.Exit.Button.MouseButton1Click:Connect(function()
-		T:Create(Prompt.Container, t, {Position = UDim2.new(1.15, 0, 0, 0)}):Play()
+	notifications.Container.Top.Exit.Button.MouseButton1Click:Connect(function()
+		T:Create(notifications.Container, t, {Position = UDim2.new(1.15, 0, 0, 0)}):Play()
 		wait(0.48)
-		Prompt:Destroy()
+		notifications:Destroy()
 	end)
 	
-	Prompt.Container.Top.Exit.Visible = close
+	notifications.Container.Top.Exit.Visible = close
 
 	wait(1)
 
@@ -237,9 +237,9 @@ function prompt(title, text, closeTime, close)
 		if typeof(closeTime) == "number" then
 			task.wait(closeTime)
 			local s = pcall(function()
-				T:Create(Prompt.Container, t, {Position = UDim2.new(1.15, 0, 0, 0)}):Play()
+				T:Create(notifications.Container, t, {Position = UDim2.new(1.15, 0, 0, 0)}):Play()
 				wait(0.48)
-				Prompt:Destroy()
+				notifications:Destroy()
 			end)
 			if not s then
 				print('Already closed.')
@@ -250,8 +250,8 @@ end
 
 local lib = {}
 
-function lib.prompt(title, description, closeTime)
-    prompt(title, description, closeTime, true)
+function lib.notifications(title, description, closeTime)
+    notifications(title, description, closeTime, true)
 end
 
 return lib
